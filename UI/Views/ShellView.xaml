@@ -1,0 +1,227 @@
+﻿<Window x:Class="UI.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:UI.Views" mc:Ignorable="d" Name="WelcomePage"
+        Loaded="WelcomePage_Loaded" Title="Suff Store" Height="520" Width="700"
+        WindowStartupLocation="CenterScreen" FontFamily="Comic Sans MS" ResizeMode="NoResize"
+        WindowStyle="None" MouseDown="WelcomePage_MouseDown" ShowInTaskbar="False">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF6274DA" Offset="0"/>
+            <GradientStop Color="#FF61EBCF" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid Margin="0 0 0 -10">
+        <Grid Name="WelcomeGrid" Visibility="Visible">
+            <Border Width="320" Height="400" BorderThickness="1.5" 
+            Margin="20" Background="#FF18FFFA" Padding="15"
+            BorderBrush="{StaticResource MaterialDesignChipBackground}"
+            CornerRadius="35" >
+                <StackPanel>
+                    <TextBlock FontSize="26" FontWeight="DemiBold" HorizontalAlignment="Center"
+                        Margin="10 20 10 20" Foreground="#FFFF4949" >
+                        Welcome
+                    </TextBlock>
+                    
+                    <Separator Style="{StaticResource MaterialDesignLightSeparator}"
+                        Background="LightSlateGray" />
+                    
+                    <materialDesign:Badged
+                        Badge="{materialDesign:PackIcon AccountPlus}"
+                        BadgeColorZoneMode="Light"
+                        HorizontalAlignment="Center" Margin="0 60 0 0">
+                        <Button Name="SignUpOptBtn"  Click="SignUpOptBtn_Click"
+                            MinHeight="40" MinWidth="160" FontSize="23"
+                            materialDesign:ButtonAssist.CornerRadius="8"
+                            Content="new to app" IsEnabled="{Binding DataContext.ControlsEnabled,
+                            RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                            Padding="0 0 0 2" Background="#FFFF5235" Foreground="#DDF3F3F3"/>
+                    </materialDesign:Badged>
+                    
+                    <materialDesign:Badged
+                        Badge="{materialDesign:PackIcon Login}"
+                        BadgeColorZoneMode="Light"
+                        HorizontalAlignment="Center" Margin="0 30 0 0">
+                        <Button Name="LogInOptBtn"  Click="LogInOptBtn_Click"
+                            MinHeight="40" MinWidth="160" FontSize="23"
+                            materialDesign:ButtonAssist.CornerRadius="8"
+                            Content="existing user" IsEnabled="{Binding DataContext.ControlsEnabled,
+                            RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                            Padding="0 0 0 2" Background="#FF09A4F6" Foreground="#DDFFFFFF"/>
+                    </materialDesign:Badged>
+                    
+                    <Button Name="QuitBtn" Click="QuitBtn_Click"
+                            Style="{StaticResource MaterialDesignFlatLightButton}"
+                            IsEnabled="{Binding DataContext.ControlsEnabled,
+                            RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Content="Quit" ToolTip="Close the app"
+                            Margin="100 60 100 0" FontSize="14" Foreground="Black"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid Name="SignUpGrid" Visibility="Hidden">
+            <materialDesign:Card
+            Width="400" Height="385"
+            Padding="19" Margin="0 0 0 0">
+                <StackPanel>
+                    <TextBlock 
+                    Margin="16 5 12 14"
+                    FontSize="18" FontWeight="DemiBold">
+                    Create your account
+                    </TextBlock>
+                    <Separator
+                    Style="{StaticResource MaterialDesignLightSeparator}" Background="LightGray"
+                    />
+                    <StackPanel Margin="0 20 0 0">
+                        <TextBox Name="UsernameTextBox"
+                        Margin="0 -15 0 0" materialDesign:TextFieldAssist.HasClearButton="True"
+                        materialDesign:HintAssist.Hint="Username" materialDesign:HintAssist.HelperTextFontSize="8"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        TextChanged="UsernameTextBox_TextChanged"/>
+                        <TextBlock Name="UserNameError" FontSize="8" Foreground="Red" 
+                            Margin="0 2 0 -12" Visibility="Visible" Text=""/>
+
+                        <PasswordBox Name="NewUserPassBox" Margin="0 25 200 0"
+                            materialDesign:HintAssist.Hint="Password"
+                            materialDesign:TextFieldAssist.HasClearButton="True"
+                            Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                        </PasswordBox>
+
+                        <TextBlock Text="* must be 5 or more long" Name="PassError"
+                            FontSize="8" Foreground="Red"  Margin="0 2 0 -12" Visibility="Hidden"/>
+
+                        <PasswordBox Name="NewUserConfirmPassBox" Margin="185 -40 0 0"
+                            materialDesign:HintAssist.Hint="Confirm"
+                            materialDesign:TextFieldAssist.HasClearButton="True"
+                            Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                        <TextBlock Text="* Doesn't match" Name="ConfrimPassError"
+                            FontSize="8" Foreground="Red"  Margin="185 2 0 -12" Visibility="Hidden"/>
+
+                        <TextBox Name="NewUserEmail"
+                        materialDesign:HintAssist.Hint="Email" Margin="0 20 0 0"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                        <TextBlock Text="* Invalid email" Name="EmailError"
+                            FontSize="8" Foreground="Red"  Margin="0 2 0 0" Visibility="Hidden"/>
+
+                        <CheckBox Name="AgreeMentCheckBox" FontWeight="Medium"
+                                Style="{StaticResource MaterialDesignUserForegroundCheckBox}"
+                                Margin="0 30 0 -45" FontSize="10" Click="AgreeMentCheckBox_Click"
+                                Content="I have read and agree to the terms of service"/>
+                        <Button Name="TempBtn" IsDefault="True" Click="TempBtn_Click"
+                                Height="0" Width="0" IsTabStop="False"/>
+                        <Button Name="SignUpBtn" IsEnabled="false"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        materialDesign:ButtonAssist.CornerRadius="13"
+                        ToolTip="Advance to create your account" Foreground="#DDFFFFFF"
+                        materialDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.4"
+                        Margin="270 60 0 10" Background="#FFFF7545" Click="SignUpBtn_Click">
+                            <TextBlock>
+                            Sign up
+                            </TextBlock>
+                        </Button>
+                        <Button Name="SignUpBack" Style="{DynamicResource MaterialDesignRaisedDarkButton}"
+                            Margin="-5 -50 280 0" Background="#FF8E8B90" IsCancel="True"
+                            materialDesign:ButtonAssist.CornerRadius="5" Click="SignUpBack_Click"
+                            Height="25" Width="60" ToolTip="Back to previous page">
+                            <TextBlock FontSize="12">
+                            Back
+                            </TextBlock>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Name="LogInGrid" Visibility="Hidden">
+            <materialDesign:Card
+            Width="400" Height="320"
+            Padding="19" Margin="0 20 0 0">
+                <StackPanel>
+                    <TextBlock 
+                    Margin="16 12 12 15"
+                    FontSize="18" FontWeight="DemiBold">
+                    Log into your account
+                    </TextBlock>
+                    <Separator
+                    Style="{StaticResource MaterialDesignLightSeparator}" Background="LightGray"
+                    />
+                    <StackPanel Margin="0 15 0 0">
+                        <TextBox Name="LogInTextBox"
+                        Margin="0 -5 0 0" TextChanged="LogInTextBox_TextChanged"
+                        materialDesign:HintAssist.Hint="Email or Username"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                        <PasswordBox Name="LogInPassBox" Margin="0 20 20 0"
+                            materialDesign:HintAssist.Hint="Password"
+                            Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+
+                        <materialDesign:PackIcon Kind="Eye" Margin="0 -22 0 -20" Visibility="Visible"
+                            HorizontalAlignment="Right" Opacity="0.6" Name="ShowHideIcon" />
+
+                        <Button Background="White" Height="12" Width="16" Name="LogInShowHideBtn"
+                            HorizontalAlignment="Right" Margin="0 -27.7 0 0"
+                            materialDesign:ButtonAssist.CornerRadius="8" Opacity="0"
+                            Click="LogInShowHideBtn_Click" ClickMode="Press" IsTabStop="False"
+                            LostMouseCapture="LogInShowHideBtn_LostMouseCapture"
+                            IsEnabled="{Binding DataContext.ControlsEnabled,
+                            RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                             />
+
+                        <TextBlock Name="LogInPassBlock"  Margin="-1 -20 20 1" Visibility="Hidden"
+                            FontSize="13" Background="White" Padding="1 0 0 0"/>
+
+                        <CheckBox Content="Keep me signed in" FontWeight="Medium"
+                                Style="{StaticResource MaterialDesignUserForegroundCheckBox}"
+                                Margin="0 30 0 -45" Name="KeepSignCheckBox" 
+                                 />
+
+                        <StackPanel>
+                            <TextBlock Name="LogInError" Text="Credentials don't match" Visibility="Hidden"
+                            HorizontalAlignment="Right" FontSize="9" Margin="0 30 0 -40" Foreground="Red">
+                            <StackPanel>
+                                <materialDesign:PackIcon Kind="CloseBold" Width="10"
+                                    Margin="-112 5 2 -5" />
+                            </StackPanel>
+                            </TextBlock>
+
+                            <TextBlock Name="LogInWrongUserNameError" Text="Username or email invalid"
+                                Visibility="Hidden" HorizontalAlignment="Right" FontSize="9"
+                                Margin="0 28 0 -40" Foreground="Red">
+                            <StackPanel>
+                                <materialDesign:PackIcon Kind="CloseBold" Width="10"
+                                     Margin="-117 -4 1 -5" />
+                            </StackPanel>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <Button Name="LogInBtn" IsDefault="True"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        materialDesign:ButtonAssist.CornerRadius="13"
+                        ToolTip="Advance to log into your account" Foreground="#DDFFFFFF"
+                        materialDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.4"
+                        Margin="270 55 0 10" Background="#FF61ABF3" Click="LogInBtn_Click">
+                            <TextBlock>
+                            Log in
+                            </TextBlock>
+                        </Button>
+
+                        <Button Name="LogInBack" Style="{DynamicResource MaterialDesignRaisedDarkButton}"
+                            Margin="0 -54 280 0" Background="#FF8E8B90" IsCancel="True"
+                            materialDesign:ButtonAssist.CornerRadius="5" Click="LogInBack_Click"
+                            Height="25" Width="60" ToolTip="Back to previous page">
+                            <TextBlock FontSize="12">
+                            Back
+                            </TextBlock>
+                        </Button>
+
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>
